@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { Note } from "@/types";
 import Sidebar from "@/components/Sidebar";
 import NotesList from "@/components/NotesList";
@@ -32,6 +32,7 @@ export default function NotesApp() {
   const selectedNote = notes.find((note) => note.id === selectedNoteId);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [theme, setTheme] = useLocalStorage<"light" | "dark">("theme", "light");
 
   const handleAddNote = useCallback(() => {
     const newNote: Note = {
@@ -73,6 +74,14 @@ export default function NotesApp() {
     [setNotes],
   );
 
+  useEffect(() => {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [theme]);
+
   const filteredNotes = notes.filter((note) => {
     const matchesCategory =
       selectedCategory === "All" || note.category === selectedCategory;
@@ -89,6 +98,8 @@ export default function NotesApp() {
         handleAddNote={handleAddNote}
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}
+        theme={theme}
+        setTheme={setTheme}
       />
 
       {/* MIDDLE PANEL: Notes List */}

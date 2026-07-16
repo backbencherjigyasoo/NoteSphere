@@ -1,4 +1,9 @@
+/* src/app/globals.css me updates: */
+
 @import "tailwindcss";
+
+/* 1. Tell Tailwind v4 to parse components based on '.dark' class name */
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
   --background: #ffffff;
@@ -12,11 +17,10 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* 2. Bind CSS variable colors to root class selector instead of OS preference */
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
 }
 
 body {

@@ -2,6 +2,8 @@ interface SidebarProps {
   handleAddNote: () => void;
   selectedCategory: string;
   setSelectedCategory: (category: string) => void;
+  theme: "light" | "dark";
+  setTheme: (theme: "light" | "dark") => void;
 }
 
 const CATEGORIES = ["All", "Personal", "Work", "Ideas", "Others"];
@@ -10,7 +12,12 @@ export default function Sidebar({
   handleAddNote,
   selectedCategory,
   setSelectedCategory,
+  theme,
+  setTheme,
 }: SidebarProps) {
+  const toggleTheme = () => {
+    setTheme(theme === "dark" ? "light" : "dark");
+  };
   return (
     <aside className="w-64 border-r border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-4 flex flex-col justify-between">
       <div>
@@ -50,8 +57,19 @@ export default function Sidebar({
         </div>
       </div>
 
-      <div className="text-xs text-zinc-400 dark:text-zinc-500">
-        Version 1.0.0
+      {/* Sidebar Footer Zone */}
+      <div className="flex flex-col gap-2">
+        {/* Toggle Theme Button */}
+        <button
+          onClick={toggleTheme}
+          className="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-lg bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 transition-all cursor-pointer"
+        >
+          <span>Theme</span>
+          <span>{theme === "dark" ? "🌙 Dark" : "☀️ Light"}</span>
+        </button>
+        <div className="text-[10px] text-zinc-400 dark:text-zinc-500 px-1">
+          Version 1.0.0
+        </div>
       </div>
     </aside>
   );
